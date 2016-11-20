@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form id="publish">
+    <input type="text" name="message" id="message">
+    <input type="submit" value="Отправить">
+</form>
+
+
+<ul id="messages"></ul>
+
+<script>
+    publish.onsubmit = () => {
+      console.log(message.value);
+      let xhr = new XMLHttpRequest();
+      xhr.open('POST', '/publish', true);
+      xhr.send(JSON.stringify({message: message.value}));
+      message.value = '';
+      return false;
+    };
+
+    let subscribe = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/subscribe', true);
+
+        xhr.onload = () => {
+
+            let li = document.createElement('li');
+            li.textContent = this.responseText;
+            messages.appendChild(li);
+            subscribe();
+        };
+
+        xhr.onerror = xhr.onabort = () => {
+            setTimeout(subscribe, 500);
+        };
+
+        xhr.send('');
+    };
+
+    subscribe();
+
+</script>
+
+
+</body>
+</html>
