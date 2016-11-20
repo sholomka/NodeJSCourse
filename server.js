@@ -18,14 +18,12 @@ http.createServer((req, res) => {
 
             req
                 .on('readable', () => {
-                    body +=  req.read();
+                    body += req.read();
 
                     if (body.length > 1e4) {
                         res.statusCode = 413;
                         res.end('Message is too big');
                     }
-
-                    console.log('1' + req.read());
                 })
                 .on('end', () => {
                     try {
