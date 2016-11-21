@@ -8,9 +8,16 @@ let chat = require('./chat');
 http.createServer((req, res) => {
     let pathName = decodeURI(url.parse(req.url).pathname);
 
+
+    console.log(pathName);
+
     switch(pathName) {
         case '/':
             sendFile('index.html', res);
+            break;
+
+        case '/files/visits.txt':
+            sendFile('files/visits.txt', res);
             break;
 
         case '/publish':
@@ -18,6 +25,7 @@ http.createServer((req, res) => {
 
             req
                 .on('readable', () => {
+
                     body += req.read();
 
                     if (body.length > 1e4) {
@@ -27,11 +35,7 @@ http.createServer((req, res) => {
                 })
                 .on('end', () => {
                     try {
-
-                        console.log('2' + typeof body);
-
                         body = JSON.parse(body);
-
                     } catch(e) {
                         res.statusCode = 400;
                         res.end('Bad request');
@@ -55,6 +59,9 @@ http.createServer((req, res) => {
 
 
 let sendFile = (fileName, res) => {
+
+    console.log(fileName);
+
     let fileStream = fs.createReadStream(fileName);
 
     fileStream

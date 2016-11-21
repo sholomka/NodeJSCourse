@@ -1,0 +1,11 @@
+﻿SELECT  
+        CONCAT(DATE_FORMAT(s.date_of_event_from, '%H:%i'), '-', DATE_FORMAT(s.date_of_event_to, '%H:%i')) as 'Время', 
+        s.title_ru  as 'Название конференции', 
+        u.name as 'Посетитель'
+  FROM schedule s
+  
+  INNER JOIN visits v ON v.id_schedule = s.id
+   INNER JOIN users u ON u.id = v.id_user
+  
+  WHERE s.id_city = 2 
+  AND DAY(s.date_of_event_from) = 29
