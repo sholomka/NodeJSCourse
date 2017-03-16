@@ -1,0 +1,9 @@
+{
+  "app": {
+    "name": "MyKoaApp"
+  },
+
+  "server": {
+    "port": "3000"
+  }
+}

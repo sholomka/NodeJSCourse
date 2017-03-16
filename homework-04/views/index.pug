@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    h1= title
+    form#publish.form-inline(enctype="application/x-www-form-urlencoded")
+        input(type="text", name="message")
+        input(type="submit", class="btn btn-primary", value="отправить")
+
+    ul#messages

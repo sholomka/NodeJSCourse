@@ -1,0 +1,5 @@
+{
+  "publicRoot": "public",
+  "filesRoot": "files",
+  "limitFileSize": "10e6"
+}

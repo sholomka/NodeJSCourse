@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form id="POST" enctype="multipart/form-data">
+    <input type="file" name="file" id="file">
+    <input type="submit" value="Загрузить">
+</form>
+
+<form id="DELETE">
+    <input type="text" name="file" placeholder="filename.ext">
+    <input type="submit" value="Удалить">
+</form>
+
+<form id="GET">
+    <input type="text" name="file" placeholder="filename.ext">
+    <input type="submit" value="Загрузить">
+</form>
+
+
+<div id="messages"></div>
+
+<script>
+    document.onsubmit = (event) => {
+        event.preventDefault();
+        let form = event.target;
+        if (!form.file.value) return;
+
+        let fileUrl = form.file.value.replace(/.*[\\\/]/, '');
+        let xhr = new XMLHttpRequest();
+
+        switch(event.target.id) {
+            case 'GET':
+                xhr.open('GET', fileUrl);
+                xhr.send();
+                break;
+            case 'POST':
+                xhr.open('POST', fileUrl, true);
+                xhr.send(form.file.files[0]);
+                break;
+
+            case 'DELETE':
+                xhr.open('DELETE', fileUrl, true);
+                xhr.send();
+                break;
+        }
+
+        xhr.onerror = xhr.onabort = (err) => {
+            console.error(err);
+        };
+    };
+</script>
+
+
+</body>
+</html>
